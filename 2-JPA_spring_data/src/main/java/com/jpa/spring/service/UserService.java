@@ -15,11 +15,11 @@ public class UserService {
 	private UserRepository userRepository;
 	
     public List<User> getUsers(){
-        return  userRepository.findAll();
+        return userRepository.findAll();
     }
 
     public Optional<User> getUser(int id){
-        return  userRepository.findById(id);
+        return userRepository.findById(id);
     }
 
     public void saveUser(User user){
@@ -32,5 +32,9 @@ public class UserService {
     
     public boolean existsByIdUser(int id){
         return userRepository.existsById(id);
+    }
+    
+    public List<User> loginUser(User user){
+    	return userRepository.findByEmailAndPassword(user.getEmail(), user.getPassword());
     }
 }

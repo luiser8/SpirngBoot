@@ -1,13 +1,6 @@
 import { Fragment, useContext } from 'react';
 import { Popover, Transition } from '@headlessui/react';
-import {
-    MenuIcon,
-    LogoutIcon,
-    ChartPieIcon,
-    CogIcon,
-    RefreshIcon,
-    ViewGridAddIcon,
-} from '@heroicons/react/outline';
+import { MenuIcon, LogoutIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import { Link } from "@reach/router";
 import { Context } from '../../context/Context';

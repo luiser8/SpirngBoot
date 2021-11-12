@@ -42,11 +42,16 @@ public class UserController {
 
 	@PostMapping("/create")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
-		User _user = new User(user.getName(), user.getEmail());
+		User _user = new User(user.getName(), user.getEmail(), user.getPassword(), user.getRol());
 		userService.saveUser(user);
 		return new ResponseEntity<>(_user, HttpStatus.OK);
 	}
 
+	@PostMapping("/login")
+	public ResponseEntity<List<User>> loginUser(@RequestBody User user) {
+		return new ResponseEntity<List<User>>(userService.loginUser(user), HttpStatus.OK);
+	}
+	
 	@PutMapping("/put/{id}")
 	public ResponseEntity<User> putUsers(@PathVariable("id") int id, @RequestBody User user) {
 
@@ -56,6 +61,8 @@ public class UserController {
 		User _user = userService.getUser(id).get();
 		_user.setName(user.getName());
 		_user.setEmail(user.getEmail());
+		_user.setRol(user.getRol());
+		_user.setPassword(user.getPassword());
 		userService.saveUser(user);
 		return new ResponseEntity<User>(HttpStatus.OK);
 	}

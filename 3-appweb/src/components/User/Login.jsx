@@ -4,7 +4,7 @@ import { post } from '../../helpers/Fetch';
 
 const Login = () => {
     const { login } = useContext(Context);
-    const [user, setUser] = useState([]);
+    const [email, setEmail] = useState([]);
     const [password, setPassword] = useState([]);
     const [error, setError] = useState(false);
     const [errorMsjTitle, setErrorMsjTitle] = useState('');
@@ -15,21 +15,21 @@ const Login = () => {
     const handleLogin = async (event) => {
         setLoadingBtn(true); setLoadingBtnMsj('Entrando... Espere un momento.');
         event.preventDefault();
-        //await post('users/login', { "user": user, "password":password }).then((items) => {
-            //if(items !== undefined){
-                //if (items.length !== 0) {
+        await post('users/login', { "email": email, "password":password }).then((items) => {
+            if(items !== undefined){
+                if (items.length !== 0) {
                         login(0,{
-                            'userId' : 1 /*items[0].userId !== undefined ? items[0].userId : ''*/,
-                            'name' : user /*items[0].name !== undefined ? items[0].name : ''*/,
-                            'email' : 'leduardo.rondon@gmail.com' /*items[0].email !== undefined ? items[0].email : ''*/,
+                            'userId' : items[0].id !== undefined ? items[0].id : '',
+                            'name' : items[0].name !== undefined ? items[0].name : '',
+                            'email' : items[0].email !== undefined ? items[0].email : '',
                         });
-                    //}else{
-                        //setError(true); setErrorMsjTitle('Error de sesión'); setErrorMsj('Ocurrio un problema intentando iniciar la sesión. Usuario / Contraseña erronea, intenta de nuevo');
-                    //}
-                //}else{
-                    //setError(true); setErrorMsjTitle('Error de red'); setErrorMsj('Ocurrio un error en la comunicación');
-                //}
-        //});
+                    }else{
+                        setError(true); setErrorMsjTitle('Error de sesión'); setErrorMsj('Ocurrio un problema intentando iniciar la sesión. Usuario / Contraseña erronea, intenta de nuevo');
+                    }
+                }else{
+                    setError(true); setErrorMsjTitle('Error de red'); setErrorMsj('Ocurrio un error en la comunicación');
+                }
+        });
         setLoadingBtn(false); setLoadingBtnMsj('Iniciar sesión');
     }
 
@@ -61,7 +61,7 @@ const Login = () => {
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div>
                             <label for="user" className="sr-only">Usuario</label>
-                            <input id="user" onChange={(event) => setUser(event.target.value)} name="user" type="text" autocomplete="usuario" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Usuario" />
+                            <input id="user" onChange={(event) => setEmail(event.target.value)} name="user" type="text" autocomplete="usuario" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Usuario" />
                         </div>
                         <div>
                             <label for="password" className="sr-only">contrasena</label>
